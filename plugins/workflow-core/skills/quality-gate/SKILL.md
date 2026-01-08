@@ -1,111 +1,147 @@
 ---
 name: quality-gate
-description: Use when providing responses involving code changes. Defines the quality checklist that MUST be reported in every response.
+description: "PFLICHT bei JEDER Antwort mit Code-Änderungen! Die 8-Punkt-Checklist MUSS als ERSTES in der Response stehen. Keine Ausnahmen."
 ---
 
-# Quality Gate Checklist
+# 🎯 QUALITY GATE: [8/8] Status Check
 
-**MUST appear at START of every response involving code changes.**
+**MUSS als ERSTES in jeder Antwort stehen bei Code-Änderungen!**
 
-## The Checklist (Report Every Time)
+---
+
+## ⚡ Die 8 Checks (Reihenfolge kritisch!)
+
+1. **[✓/✗] Graphiti ZUERST**: Wurde VOR ALLEM ANDEREN das Arbeitsgedächtnis durchsucht?
+2. **[✓/✗] Delegation**: Wurde geprüft ob Subagents die Aufgabe übernehmen können?
+3. **[✓/✗] Product Review**: Bei Feature-Planung: Team (DM, CEO, UX) konsultiert?
+4. **[✓/✗] Design System**: Wird der Style eingehalten? (project-specific)
+5. **[✓/✗] Testing**: Wurden Tests ausgeführt / geschrieben?
+6. **[✓/✗] PR Review**: Bei PR-Merge: CI abgewartet + code-reviewer Subagent ausgeführt?
+7. **[✓/✗] Mobile**: Bei UI-Änderungen: mobile-responsive-reviewer ausgeführt? (44px touch targets!)
+8. **[✓/✗] Security**: Bei API/Auth-Änderungen: security-pentest-reviewer ausgeführt? (OWASP Top 10)
+
+---
+
+## 📊 PFLICHT-FORMAT für JEDE Antwort mit Code-Änderungen
 
 ```
-**Quality Gate [X/7]:**
-- [ ] Worktree: Working in isolated branch, not main
-- [ ] Graphiti: Checked memory for relevant context
-- [ ] Delegation: Evaluated if subagents should handle task
-- [ ] Tests: All tests passing (`npm test` / `go test`)
-- [ ] Verification: Ran commands fresh, evidence attached
-- [ ] TDD: Tests written before implementation (for new code)
-- [ ] No Shortcuts: No TODOs, no mocks, no placeholders
+**[x/8] Status Check:**
+- ✅ Graphiti: VOR der Arbeit nach [keywords] gesucht, [n] relevante Einträge gefunden
+- ✅ Delegation: Task an [agent] delegiert / Begründet selbst gemacht
+- ✅ Product Review: Team konsultiert / Keine Feature-Planung
+- ✅ Design System: Style compliant / Keine UI-Änderungen
+- ✅ Testing: `npm test` erfolgreich / Keine Code-Änderungen
+- ✅ PR Review: CI grün + code-reviewer passed / Kein PR in dieser Antwort
+- ✅ Mobile: mobile-responsive-reviewer passed / Keine UI-Änderungen
+- ✅ Security: security-pentest-reviewer passed / Keine API/Auth-Änderungen
 ```
 
-## Detailed Checks
+---
 
-### 1. Worktree Check
+## ❌ UNAKZEPTABLE Status Checks
+
+```
+- ❌ Graphiti: Nicht genutzt (FAIL - immer zuerst!)
+- ❌ Graphiti: Nach der Arbeit genutzt (FAIL - muss VOR der Arbeit sein!)
+- ❌ Delegation: Selbst gemacht ohne Delegation zu prüfen (FAIL!)
+- ❌ Product Review: Feature geplant ohne Team Review (FAIL!)
+- ❌ Design System: Defaults verwendet statt Design Tokens (FAIL!)
+- ❌ Testing: Tests nicht ausgeführt nach Code-Änderungen (FAIL!)
+- ❌ PR Review: PR gemerged ohne CI abzuwarten (FAIL!)
+- ❌ PR Review: PR gemerged ohne code-reviewer Subagent (FAIL!)
+- ❌ Mobile: UI-Komponenten erstellt ohne mobile-responsive-reviewer (FAIL!)
+- ❌ Security: API-Routes erstellt ohne security-pentest-reviewer (FAIL!)
+```
+
+---
+
+## ✅ KORREKTE Beispiele
+
+### Vollständiger Check (alle relevant):
+```
+**[8/8] Status Check:**
+- ✅ Graphiti: VOR Start nach "user auth" gesucht, 3 Patterns gefunden
+- ✅ Delegation: Task an Explore-Agent für Codebase-Analyse delegiert
+- ✅ Product Review: Team konsultiert, Feedback integriert
+- ✅ Design System: Design tokens verwendet, visuell verifiziert
+- ✅ Testing: `npm test` passed (15/15)
+- ✅ PR Review: CI passed, code-reviewer keine kritischen Findings
+- ✅ Mobile: mobile-responsive-reviewer passed, touch targets 44px
+- ✅ Security: security-pentest-reviewer passed, Zod validation OK
+```
+
+### Teilweiser Check (nicht alle relevant):
+```
+**[6/8] Status Check:**
+- ✅ Graphiti: Session-Start Suche + Task-Suche nach "component design"
+- ✅ Delegation: Keine - nur triviale Config-Änderung
+- ⏸️ Product Review: Keine Feature-Planung
+- ⏸️ Design System: Keine UI-Änderungen
+- ✅ Testing: Tests passed nach Edit
+- ⏸️ PR Review: Kein PR erstellt
+- ⏸️ Mobile: Keine UI-Änderungen
+- ⏸️ Security: Keine API/Auth-Änderungen
+```
+
+---
+
+## 🚨 REGELN (Keine Ausnahmen!)
+
+| Check | Regel |
+|-------|-------|
+| **Graphiti** | MUSS immer ✅ sein (außer triviale Fragen wie "Hallo") |
+| **Product Review** | MUSS ✅ sein bei JEDER Feature-Planung |
+| **Mobile** | MUSS ✅ sein bei JEDER UI-Komponenten-Erstellung |
+| **Security** | MUSS ✅ sein bei JEDER API/Auth-Änderung |
+| **PR Review** | MUSS ✅ sein vor JEDEM Merge |
+
+---
+
+## 🔄 PR MERGE WORKFLOW (Teil von Check 6)
+
+**VOR JEDEM PR MERGE — KEINE AUSNAHMEN:**
+
+### Schritt 1: CI Pipeline abwarten
 ```bash
-pwd                       # Not in main repo
-git branch --show-current # On feature/fix/chore branch
+gh pr checks <pr-number> --watch
 ```
 
-### 2. Graphiti Memory Check
-```python
-mcp__graphiti__search_nodes(query="[keywords]", group_ids=["patterns", "gotchas"])
+### Schritt 2: Code Review mit Subagent
 ```
-- Did you check for relevant patterns?
-- Did you check for known gotchas?
+Task(
+  subagent_type="pr-review-toolkit:code-reviewer",
+  prompt="Review PR #X. Post findings as GitHub PR comments."
+)
+```
 
-### 3. Delegation Check
-- Is this task complex enough for subagent?
-- Would a specialized reviewer help?
-- Can tasks run in parallel?
-
-### 4. Test Check
+### Schritt 3: Erst dann Merge
 ```bash
-npm test        # or
-go test ./...   # or
-pytest
-```
-- Exit code 0?
-- All tests pass?
-- No new failures?
-
-### 5. Verification Check
-- Ran fresh commands (not from memory)?
-- Read full output?
-- Exit codes checked?
-
-### 6. TDD Check (for new code)
-- Test written first?
-- Watched test fail?
-- Implementation makes test pass?
-
-### 7. No Shortcuts Check
-- Zero TODOs in code?
-- Zero mocks in production code?
-- Zero placeholders?
-- Complete implementation?
-
-## Output Format
-
-For code changes, START your response with:
-
-```
-**Quality Gate [7/7]:**
-- ✅ Worktree: `feat/123-user-auth` in `repo-123/`
-- ✅ Graphiti: Searched "auth patterns", found 3 relevant entries
-- ✅ Delegation: Task self-contained, no subagent needed
-- ✅ Tests: `npm test` → 47/47 passed
-- ✅ Verification: Fresh run, exit code 0
-- ✅ TDD: Test written first for validateUser()
-- ✅ No Shortcuts: Zero TODOs, real implementation
-
-[Then your actual response...]
+gh pr merge --squash --delete-branch
 ```
 
-## When Checks Fail
+### ❌ VERBOTEN:
+- Merge ohne auf CI zu warten
+- Merge ohne code-reviewer Subagent
+- Schnelles "gh pr create && gh pr merge" in einem Schritt
 
-If ANY check fails:
-1. **STOP** implementation
-2. **FIX** the failing check first
-3. **THEN** continue with task
+---
 
-Example:
-```
-**Quality Gate [5/7]:**
-- ❌ Worktree: On main branch!
-- ❌ Tests: 2 failing tests
+## ⚡ Quick Reference
 
-⚠️ BLOCKED: Must create worktree and fix tests before proceeding.
+**Vor Code-Änderungen:**
+1. Graphiti durchsuchen
+2. Delegation prüfen
+3. Worktree Check (invoke `worktree` skill)
 
-Creating worktree now...
-```
+**Nach Code-Änderungen:**
+1. Tests ausführen
+2. Relevante Reviewer starten (Mobile/Security)
 
-## Non-Negotiable Rules
+**Vor PR Merge:**
+1. CI abwarten
+2. code-reviewer Subagent
+3. Erst dann merge
 
-- **Graphiti check**: Always (except trivial questions)
-- **Worktree check**: Always before code changes
-- **Test check**: Always before claiming completion
-- **Verification**: Always before status claims
+---
 
-**No exceptions. Report honestly.**
+*"8/8 oder nichts."*
