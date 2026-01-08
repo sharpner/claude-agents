@@ -17,9 +17,14 @@ PR_NUMBER=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
 gh pr diff $PR_NUMBER
 ```
 
-3. Run Gemini review using Gemini CLI:
+3. Run Gemini review using the full script (recommended):
 ```bash
-gh pr diff $PR_NUMBER | gemini "Review this PR diff for: security vulnerabilities, error handling, type safety, architecture issues. Be specific with file:line references."
+./scripts/gemini-review.sh $PR_NUMBER
+```
+
+Or manually with inline prompt:
+```bash
+gh pr diff $PR_NUMBER | gemini "Review this unified diff format. Note: 'diff --git a/file b/file' are headers, NOT code. Review for: security vulnerabilities, error handling, type safety, architecture issues. Be specific with file:line references. Format as markdown."
 ```
 
 4. Post result as PR comment:

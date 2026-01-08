@@ -97,6 +97,13 @@ $PR_BODY
 $FOCUS_SECTION
 $FILE_CONTEXT
 **Diff:**
+NOTE: This is a unified diff format. Lines starting with:
+- \`diff --git a/file b/file\` are file headers (NOT code!)
+- \`---\` and \`+++\` show old/new file paths
+- \`@@\` shows line numbers
+- \`-\` (red) = removed lines
+- \`+\` (green) = added lines
+
 \`\`\`diff
 $DIFF
 \`\`\`
