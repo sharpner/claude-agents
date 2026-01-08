@@ -4,42 +4,36 @@ Production-ready Claude Code workflows with Graphiti memory, quality gates, and 
 
 ## Quick Start
 
-### Installation
-
 ```bash
 # In Claude Code, register the marketplace
 /plugin marketplace add sharpner/claude-agents
 
 # Install the core workflow plugin
 /plugin install workflow-core@sharpner-claude-agents
+
+# Optional: Setup Gemini integration
+/workflow-core:setup-gemini
 ```
-
-### Initialize New Project
-
-```bash
-# Clone and run init script
-git clone https://github.com/sharpner/claude-agents.git /tmp/claude-agents
-/tmp/claude-agents/scripts/init-project.sh my-project
-```
-
-Or manually:
-1. Install plugin (see above)
-2. Create `docs/VISION.md`, `docs/LEARNINGS.md`, `docs/GUIDANCE.md`
-3. Start using skills and agents
 
 ---
 
 ## What's Included
 
-### Skills
+### Skills (9)
 
-| Skill | Purpose |
-|-------|---------|
-| `core-rules` | Guard clauses, no TODOs, no mocking, no utils |
-| `graphiti-memory` | Knowledge graph memory for patterns/fixes |
-| `pr-workflow` | PR lifecycle: CI, review, merge rules |
+| Skill | When to Use |
+|-------|-------------|
+| `core-rules` | **ALWAYS** — Guard clauses, no TODOs, no mocking |
+| `quality-gate` | **ALWAYS bei Code-Änderungen** — 8/8 Checklist PFLICHT! |
+| `worktree` | **VOR Code-Änderungen** — Isolation Check |
+| `graphiti-memory` | Session-Start, neue Tasks, bei Fehlern |
+| `delegation` | Komplexe Tasks — Subagent-Auswahl |
+| `tdd` | Neue Features, Bug Fixes — Tests FIRST |
+| `debugging` | Bei Fehlern — Root Cause vor Fix |
+| `verification` | Vor Completion Claims — Evidence required |
+| `pr-workflow` | PRs — CI, Review, Merge-Rules |
 
-### Agents
+### Agents (5)
 
 | Agent | Purpose |
 |-------|---------|
@@ -47,13 +41,44 @@ Or manually:
 | `implementation-agent` | Implement with zero shortcuts |
 | `testing-agent` | Comprehensive test coverage |
 | `review-agent` | Quality gate validation |
+| `gemini-explorer` | [OPTIONAL] Large-context codebase analysis (1M tokens) |
 
-### Commands
+### Commands (6)
 
 | Command | Purpose |
 |---------|---------|
-| `/pre-pr` | Pre-PR validation checklist |
-| `/feature-branch` | Create and setup feature branch |
+| `/workflow-core:pre-pr` | Pre-PR validation checklist |
+| `/workflow-core:feature-branch` | Create and setup feature branch |
+| `/workflow-core:next-issue` | Pick next GitHub issue, create worktree, start implementation |
+| `/workflow-core:backlog-groom` | Goal-driven backlog refinement |
+| `/workflow-core:gemini-review` | [OPTIONAL] Gemini AI code review |
+| `/workflow-core:setup-gemini` | Setup Gemini API key and scripts |
+
+### Scripts (3, optional)
+
+| Script | Purpose |
+|--------|---------|
+| `gemini-review.sh` | PR code review with PASS/NEEDS WORK/FAIL verdict |
+| `gemini-subagent-impersonation.sh` | Make Gemini impersonate Claude agents (80% cheaper) |
+| `gemini-research.sh` | Web + codebase research |
+
+---
+
+## 🎯 Quality Gate: 8/8 Checklist
+
+**MUST appear at START of every response with code changes:**
+
+```
+**[x/8] Status Check:**
+- ✅ Graphiti: VOR der Arbeit nach [keywords] gesucht
+- ✅ Delegation: Task delegiert / Begründet selbst gemacht
+- ✅ Product Review: Team konsultiert / Keine Feature-Planung
+- ✅ Design System: Style compliant / Keine UI-Änderungen
+- ✅ Testing: Tests erfolgreich / Keine Code-Änderungen
+- ✅ PR Review: CI grün + code-reviewer / Kein PR
+- ✅ Mobile: mobile-reviewer passed / Keine UI-Änderungen
+- ✅ Security: security-reviewer passed / Keine API/Auth-Änderungen
+```
 
 ---
 
@@ -61,16 +86,18 @@ Or manually:
 
 ### NO SHORTCUTS
 
-- **IMMEDIATE FIXES**: Fix issues when discovered
-- **COMPLETE IMPLEMENTATIONS**: No TODOs, no placeholders
-- **REAL CONNECTIONS**: No mocking in production
-- **PRODUCTION QUALITY**: Every line ready for production
-- **COMPREHENSIVE TESTING**: >80% coverage
+- **NO MOCKING** — Real backend connections only
+- **NO TODOs** — Fix immediately and completely
+- **NO else statements** — Guard clauses everywhere
+- **NO utils/ folders** — Proper package design
+- **100% test pass rate** required to commit
+- **Never push directly to main**
+- **NO MERGE WITHOUT REVIEW** — Always run code-reviewer subagent
 
-### Guard Clauses Everywhere
+### Guard Clauses
 
 ```typescript
-// CORRECT
+// ✅ CORRECT
 function process(data?: Data) {
   if (!data) return null;
   if (!data.valid) return null;
@@ -79,12 +106,12 @@ function process(data?: Data) {
   return transform(data);
 }
 
-// FORBIDDEN - else blocks
+// ❌ FORBIDDEN - else blocks
 function process(data?: Data) {
   if (data) {
     if (data.valid) {
       return transform(data);
-    } else {  // NO
+    } else {  // NO!
       return null;
     }
   }
@@ -96,40 +123,59 @@ function process(data?: Data) {
 ## Workflow
 
 ```
+/next-issue (picks from GitHub, creates worktree)
+        ↓
 Planning Agent (reads VISION/LEARNINGS/GUIDANCE)
         ↓
 Feature Specification (docs/specs/feature-*.md)
         ↓
-Implementation Agent (writes production code)
+Implementation Agent (TDD, guard clauses, no shortcuts)
         ↓
-Testing Agent (creates comprehensive tests)
+Testing Agent (>80% coverage)
         ↓
-Review Agent (quality gate validation)
+Review Agent (8/8 quality gate)
         ↓
-PR Workflow (CI → Review → Merge)
+/pre-pr (validation checklist)
+        ↓
+PR Workflow (CI → code-reviewer → Merge)
+```
+
+---
+
+## Gemini Integration (Optional)
+
+Setup Gemini for 80% cheaper code reviews:
+
+```bash
+/workflow-core:setup-gemini
+```
+
+This will:
+1. Check if Gemini CLI is installed
+2. Ask for your API key (from https://aistudio.google.com/apikey)
+3. Add to your shell config
+4. Copy scripts to your project
+
+Usage:
+```bash
+./scripts/gemini-review.sh 123                    # Review PR #123
+./scripts/gemini-subagent-impersonation.sh 123 security-reviewer
+./scripts/gemini-research.sh "performance optimization"
 ```
 
 ---
 
 ## Master Documents
 
-### VISION.md
-- Long-term strategic direction
-- Review: Quarterly
-
-### LEARNINGS.md
-- Historical decisions and outcomes
-- Update: Weekly (Friday)
-
-### GUIDANCE.md
-- Current tactical standards
-- Review: Bi-weekly
+| Document | Purpose | Review |
+|----------|---------|--------|
+| `docs/VISION.md` | Long-term strategic direction | Quarterly |
+| `docs/LEARNINGS.md` | Historical decisions and outcomes | Weekly |
+| `docs/GUIDANCE.md` | Current tactical standards | Bi-weekly |
 
 ---
 
 ## Graphiti Memory
-
-Store patterns, fixes, and learnings:
 
 ```python
 # Session start - load context
@@ -138,12 +184,12 @@ mcp__graphiti__get_context(
     group_ids=["proj_<project>"]
 )
 
-# After fixing bug - save learning
+# After fixing bug - save learning (HEUREKA rule!)
 mcp__graphiti__add_memory(
-    name="FIX: Description",
-    episode_body="Problem and solution",
+    name="HEUREKA: Description",
+    episode_body="What was learned, what was wrong, how it really works",
     group_id="proj_<project>",
-    source_description="fix"
+    source="text"
 )
 ```
 
@@ -153,29 +199,38 @@ mcp__graphiti__add_memory(
 
 ```
 claude-agents/
-├── .claude-plugin/
-│   └── marketplace.json
 ├── plugins/
 │   └── workflow-core/
 │       ├── .claude-plugin/plugin.json
 │       ├── skills/
 │       │   ├── core-rules/SKILL.md
+│       │   ├── quality-gate/SKILL.md
+│       │   ├── worktree/SKILL.md
 │       │   ├── graphiti-memory/SKILL.md
+│       │   ├── delegation/SKILL.md
+│       │   ├── tdd/SKILL.md
+│       │   ├── debugging/SKILL.md
+│       │   ├── verification/SKILL.md
 │       │   └── pr-workflow/SKILL.md
 │       ├── agents/
 │       │   ├── planning-agent.md
 │       │   ├── implementation-agent.md
 │       │   ├── testing-agent.md
-│       │   └── review-agent.md
+│       │   ├── review-agent.md
+│       │   └── gemini-explorer.md
 │       ├── commands/
 │       │   ├── pre-pr.md
-│       │   └── feature-branch.md
-│       └── hooks/hooks.json
-├── templates/
-│   ├── CLAUDE.md.template
-│   ├── VISION.md.template
-│   ├── LEARNINGS.md.template
-│   └── GUIDANCE.md.template
+│       │   ├── feature-branch.md
+│       │   ├── next-issue.md
+│       │   ├── backlog-groom.md
+│       │   ├── gemini-review.md
+│       │   └── setup-gemini.md
+│       ├── scripts/
+│       │   ├── gemini-review.sh
+│       │   ├── gemini-subagent-impersonation.sh
+│       │   └── gemini-research.sh
+│       └── templates/
+│           └── CLAUDE.md.template
 ├── scripts/
 │   └── init-project.sh
 └── README.md
@@ -183,41 +238,18 @@ claude-agents/
 
 ---
 
-## Usage Examples
+## Initialize New Project
 
-### Generate Feature Spec
-```
-"Use planning-agent to generate spec for: user authentication"
-```
+```bash
+# Option 1: Use init script (interactive, asks for Gemini)
+git clone https://github.com/sharpner/claude-agents.git /tmp/claude-agents
+/tmp/claude-agents/scripts/init-project.sh my-project
 
-### Implement Feature
+# Option 2: Manual
+/plugin marketplace add sharpner/claude-agents
+/plugin install workflow-core@sharpner-claude-agents
+/workflow-core:setup-gemini  # optional
 ```
-"Use implementation-agent to implement docs/specs/feature-auth.md"
-```
-
-### Create Tests
-```
-"Use testing-agent to create tests for feature-auth"
-```
-
-### Review Code
-```
-"Use review-agent to review feature-auth implementation"
-```
-
-### Pre-PR Check
-```
-/pre-pr
-```
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Follow the workflow (use your own agents!)
-4. Submit PR
 
 ---
 
@@ -227,6 +259,4 @@ MIT
 
 ---
 
-## Credits
-
-Built with battle-tested patterns from production projects.
+*"8/8 oder nichts."*
