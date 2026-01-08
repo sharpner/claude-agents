@@ -1,7 +1,6 @@
 ---
 name: planning-agent
 description: Generates feature specifications from master documents (VISION, LEARNINGS, GUIDANCE). Use for planning new features before implementation.
-tools: Read, Grep, Glob, WebFetch
 model: sonnet
 ---
 

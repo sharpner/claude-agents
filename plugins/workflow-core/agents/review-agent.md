@@ -1,7 +1,6 @@
 ---
 name: review-agent
 description: Comprehensive code review that validates against project standards, detects violations, and ensures production-ready quality.
-tools: Read, Grep, Glob
 model: sonnet
 ---
 

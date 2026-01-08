@@ -1,7 +1,6 @@
 ---
 name: testing-agent
 description: Creates comprehensive test coverage. Use after implementation to ensure quality through unit, integration, and E2E tests.
-tools: Read, Write, Glob, Grep, Bash
 model: sonnet
 ---
 

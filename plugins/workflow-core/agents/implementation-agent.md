@@ -1,7 +1,6 @@
 ---
 name: implementation-agent
 description: Implements features following project standards with complete, production-ready code and zero shortcuts.
-tools: Read, Write, Edit, Glob, Grep, Bash
 model: sonnet
 ---
 
