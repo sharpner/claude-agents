@@ -131,7 +131,7 @@ cd ../{{project}}-<name>
 ```python
 mcp__graphiti__get_context(
     query="gotcha fix pattern architecture",
-    group_ids=["proj:{{project}}", "global:"]
+    group_ids=["project_{{project}}", "global_"]
 )
 ```
 
@@ -139,7 +139,7 @@ mcp__graphiti__get_context(
 ```python
 mcp__graphiti__search_nodes(
     query="[task keywords]",
-    group_ids=["proj:{{project}}"],
+    group_ids=["project_{{project}}"],
     max_nodes=10
 )
 ```
@@ -148,7 +148,7 @@ mcp__graphiti__search_nodes(
 ```python
 mcp__graphiti__search_nodes(
     query="[error message]",
-    group_ids=["proj:{{project}}"],
+    group_ids=["project_{{project}}"],
     max_nodes=5
 )
 ```
@@ -158,7 +158,7 @@ mcp__graphiti__search_nodes(
 mcp__graphiti__add_memory(
     name="HEUREKA: [kurze Beschreibung]",
     episode_body="Was gelernt, was war falsch, wie ist es richtig",
-    group_id="proj:{{project}}",
+    group_id="project_{{project}}",
     source="text"
 )
 ```

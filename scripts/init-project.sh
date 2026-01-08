@@ -355,7 +355,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "  ✅ Project $PROJECT_NAME initialized!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "Graphiti Group ID: proj:$PROJECT_NAME"
+echo "Graphiti Group ID: project_$PROJECT_NAME"
 echo ""
 echo "Next steps:"
 echo "  1. Review docs/VISION.md"

@@ -35,7 +35,7 @@ Create `CLAUDE.md` in project root with the following content.
 **Replace placeholders:**
 - `{{PROJECT_NAME}}` → User's project name
 - `{{PROJECT_TAGLINE}}` → User's tagline
-- `proj:{{project}}` → `proj:<project-name>`
+- `project_{{project}}` → `project_<project-name>`
 
 ```markdown
 # CLAUDE.md — {{PROJECT_NAME}}
@@ -49,7 +49,7 @@ Create `CLAUDE.md` in project root with the following content.
 **Diese Regeln sind NICHT optional. Bei JEDER Antwort mit Code-Änderungen:**
 
 1. **CHECKLIST ZUERST** — Die `[x/8] Status Check` Checklist MUSS als ALLERERSTES in deiner Antwort erscheinen
-2. **GRAPHITI VOR ARBEIT** — Bevor du Code schreibst: `mcp__graphiti__search_nodes(query="...", group_ids=["proj:{{project}}"])`
+2. **GRAPHITI VOR ARBEIT** — Bevor du Code schreibst: `mcp__graphiti__search_nodes(query="...", group_ids=["project_{{project}}"])`
 3. **PR MERGE NIE OHNE REVIEW** — Vor jedem `gh pr merge`: `Task(subagent_type="pr-review-toolkit:code-reviewer")`
 
 **Wenn du diese Regeln nicht befolgst, ist die Antwort UNGÜLTIG.**
@@ -111,20 +111,20 @@ make test     # Run tests
 
 ## Graphiti Memory
 
-Group ID: `proj:{{project}}`
+Group ID: `project_{{project}}`
 
 ```python
 # Session start
 mcp__graphiti__get_context(
     query="gotcha fix pattern",
-    group_ids=["proj:{{project}}"]
+    group_ids=["project_{{project}}"]
 )
 
 # Save learning
 mcp__graphiti__add_memory(
     name="HEUREKA: Description",
     episode_body="What was learned",
-    group_id="proj:{{project}}",
+    group_id="project_{{project}}",
     source="text"
 )
 ```
@@ -281,7 +281,7 @@ Created:
   ✅ .gitignore updated
   [✅/⏭️] Gemini scripts (if selected)
 
-Graphiti Group ID: proj:{{project}}
+Graphiti Group ID: project_{{project}}
 
 Next steps:
   1. Review docs/VISION.md - define your mission
