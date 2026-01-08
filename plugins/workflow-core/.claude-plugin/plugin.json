@@ -1,6 +1,6 @@
 {
   "name": "workflow-core",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Core development workflow: guard clauses, PR workflow, Graphiti memory, quality gates, and agent templates",
   "author": {
     "name": "sharpner"

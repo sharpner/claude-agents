@@ -4,6 +4,42 @@ description: Backlog grooming and next story planning with goal-driven refinemen
 
 You are the Product Owner performing goal-driven backlog refinement.
 
+## VERTICAL SLICES ONLY (Durchstiche)
+
+**CRITICAL PRINCIPLE: Every story must be a complete vertical slice!**
+
+### What this means:
+- Every story delivers **user-visible value**
+- Every story includes **UI + API + Backend + Tests**
+- NO "setup infrastructure first, then build features" approach
+- NO backend-only stories without UI
+- NO "prepare database schema" stories
+
+### Why:
+- Users can test and give feedback after EVERY story
+- No half-finished invisible work
+- Reduces integration risk
+- Forces thinking about the full user experience
+
+### Example - WRONG:
+```
+Story 1: Create user database schema
+Story 2: Create user API endpoints
+Story 3: Create user registration UI
+Story 4: Connect everything together
+```
+
+### Example - CORRECT:
+```
+Story 1: User can register with email (minimal UI + API + DB)
+Story 2: User can login (builds on registration)
+Story 3: User can reset password
+```
+
+**Each story = Working feature a user can actually use!**
+
+---
+
 ## USER GOAL
 
 ```
@@ -105,6 +141,13 @@ mcp__graphiti__search_memory_facts(
 
 ## New Story Required
 
+**VERTICAL SLICE CHECK:**
+- [ ] Has UI component? (User can see/interact)
+- [ ] Has API/Backend? (Data flows end-to-end)
+- [ ] Deliverable value? (User can actually USE this)
+
+> If any checkbox is NO → Split differently or combine with another story!
+
 **Title:** [story title]
 **Priority:** [P0/P1/P2]
 
@@ -114,12 +157,14 @@ I want to [goal-derived action]
 So that [benefit]
 
 **Acceptance Criteria:**
-- [ ] AC derived from goal
+- [ ] AC derived from goal (must be user-testable!)
 - [ ] AC derived from goal
 
-**Technical Notes:**
-- [Implementation hints]
-- [Dependencies]
+**Technical Scope (full stack!):**
+- UI: [what the user sees/clicks]
+- API: [endpoints involved]
+- Backend: [data/logic changes]
+- Tests: [what to verify]
 
 **Blocked By:** [Issue numbers if any]
 ```
@@ -155,11 +200,14 @@ gh issue create \
 **So that** [benefit]
 
 ## Acceptance Criteria
-- [ ] AC 1
+- [ ] AC 1 (user-testable)
 - [ ] AC 2
 
-## Technical Notes
-- ...
+## Technical Scope (Vertical Slice)
+- **UI:** [component/page]
+- **API:** [endpoints]
+- **Backend:** [data/logic]
+- **Tests:** [what to verify]
 
 ## Related Issues
 - Depends on: #X
@@ -207,7 +255,9 @@ gh issue list --state open --json number,title,labels --limit 100
 
 ## REMINDERS
 
+- **VERTICAL SLICES ONLY** — No backend-only or infra-only stories!
 - **No issue changes without user confirmation**
 - **Always search Graphiti** for context
-- **ACs must be testable** (no vague formulations)
+- **ACs must be user-testable** (no vague formulations)
 - **Dependencies clearly named** (Blocked By / Related To)
+- **Every story = something the user can actually use**
