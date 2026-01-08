@@ -1,5 +1,5 @@
 ---
-description: "[OPTIONAL - requires Gemini CLI or PAL MCP] Get Gemini AI code review and post as PR comment"
+description: "[OPTIONAL - requires Gemini CLI] Get Gemini AI code review and post as PR comment"
 ---
 
 Run Gemini code review for the current PR using Gemini CLI.
@@ -17,13 +17,9 @@ PR_NUMBER=$(gh pr list --head "$BRANCH" --json number --jq '.[0].number')
 gh pr diff $PR_NUMBER
 ```
 
-3. Run Gemini review using PAL MCP or Gemini CLI:
+3. Run Gemini review using Gemini CLI:
 ```bash
-# Option A: Using PAL MCP
-mcp__pal__codereview --model gemini-2.5-pro
-
-# Option B: Using Gemini CLI directly
-gemini -p "Review this PR for: security, error handling, type safety, architecture"
+gh pr diff $PR_NUMBER | gemini -p "Review this PR diff for: security vulnerabilities, error handling, type safety, architecture issues. Be specific with file:line references."
 ```
 
 4. Post result as PR comment:
@@ -33,6 +29,6 @@ gh pr comment $PR_NUMBER --body "$(cat review-output.md)"
 
 ## Notes
 
-- Requires Gemini CLI (`gemini`) or PAL MCP configured
+- Requires Gemini CLI (`gemini`) - Install: https://github.com/google-gemini/gemini-cli
 - Reviews: security, error handling, type safety, architecture
 - Posts review directly as PR comment

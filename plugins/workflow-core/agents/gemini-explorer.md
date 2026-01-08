@@ -1,6 +1,6 @@
 ---
 name: gemini-explorer
-description: "[OPTIONAL - requires PAL MCP or Gemini CLI] Large-context codebase exploration using Gemini 2.5 Pro's 1M token window. READ-ONLY - never modifies code. Use for pattern detection, architecture analysis, and cross-file searches that exceed Claude's context."
+description: "[OPTIONAL - requires Gemini CLI] Large-context codebase exploration using Gemini 2.5 Pro's 1M token window. READ-ONLY - never modifies code. Use for pattern detection, architecture analysis, and cross-file searches that exceed Claude's context."
 model: sonnet
 ---
 
@@ -62,4 +62,4 @@ Explore codebases, find patterns, analyze architecture — but **NEVER modify co
 
 ## Integration Note
 
-This agent uses PAL MCP's `mcp__pal__chat` with `model: gemini-2.5-pro` internally for analysis. The large context window allows reading entire modules at once.
+This agent uses Gemini CLI (`gemini`) for analysis. The large context window allows reading entire modules at once. Install: https://github.com/google-gemini/gemini-cli
