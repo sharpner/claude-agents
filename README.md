@@ -194,14 +194,14 @@ Usage:
 # Session start - load context
 mcp__graphiti__get_context(
     query="gotcha fix pattern",
-    group_ids=["proj_<project>"]
+    group_ids=["proj:<project>"]
 )
 
 # After fixing bug - save learning (HEUREKA rule!)
 mcp__graphiti__add_memory(
     name="HEUREKA: Description",
     episode_body="What was learned, what was wrong, how it really works",
-    group_id="proj_<project>",
+    group_id="proj:<project>",
     source="text"
 )
 ```

@@ -10,12 +10,12 @@ You are starting work on the next GitHub issue following agile workflow.
 
 ```python
 # Session context
-mcp__graphiti__get_episodes(group_ids=["proj_<project>"], max_episodes=5)
+mcp__graphiti__get_episodes(group_ids=["proj:<project>"], max_episodes=5)
 
 # Known issues/gotchas
 mcp__graphiti__search_nodes(
     query="current work progress blockers",
-    group_ids=["proj_<project>"],
+    group_ids=["proj:<project>"],
     max_nodes=5
 )
 ```
@@ -78,13 +78,13 @@ gh issue view <issue-number> --json number,title,body,labels
 ```python
 mcp__graphiti__search_nodes(
     query="[keywords from issue title/body]",
-    group_ids=["proj_<project>"],
+    group_ids=["proj:<project>"],
     max_nodes=10
 )
 
 mcp__graphiti__search_memory_facts(
     query="[component or feature name from issue]",
-    group_ids=["proj_<project>"],
+    group_ids=["proj:<project>"],
     max_facts=10
 )
 ```

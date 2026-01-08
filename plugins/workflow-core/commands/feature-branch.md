@@ -15,7 +15,7 @@ ISSUE NUMBER (optional): $2
 # Load relevant context
 mcp__graphiti__get_context(
     query="[keywords from branch name]",
-    group_ids=["proj_<projectname>", "global_"]
+    group_ids=["proj:<projectname>", "global:"]
 )
 ```
 

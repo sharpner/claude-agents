@@ -27,8 +27,8 @@ Use consistent group IDs per project:
 
 | Group ID Pattern | Usage |
 |------------------|-------|
-| `proj_<projectname>` | Project-specific knowledge |
-| `global_` | Cross-project patterns |
+| `proj:<projectname>` | Project-specific knowledge |
+| `global:` | Cross-project patterns |
 
 **NEVER use fragmented group_ids like `projectname_wip`, `projectname_fixes`!**
 
@@ -42,7 +42,7 @@ Use consistent group IDs per project:
 # Load project context at session start
 context = mcp__graphiti__get_context(
     query="gotcha fix pattern architecture",
-    group_ids=["proj_<projectname>", "global_"]
+    group_ids=["proj:<projectname>", "global:"]
 )
 ```
 
@@ -55,7 +55,7 @@ context = mcp__graphiti__get_context(
 mcp__graphiti__add_memory(
     name="FIX: [Brief description]",
     episode_body="Problem: [what was wrong]\nCause: [root cause]\nSolution: [how it was fixed]\nCode: [relevant snippet]",
-    group_id="proj_<projectname>",
+    group_id="proj:<projectname>",
     source_description="fix",
     source="text"
 )
@@ -66,7 +66,7 @@ mcp__graphiti__add_memory(
 mcp__graphiti__add_memory(
     name="GOTCHA: [Brief description]",
     episode_body="Context: [when this happens]\nProblem: [what goes wrong]\nSolution: [how to avoid/fix]",
-    group_id="proj_<projectname>",
+    group_id="proj:<projectname>",
     source_description="gotcha",
     source="text"
 )
@@ -77,7 +77,7 @@ mcp__graphiti__add_memory(
 mcp__graphiti__add_memory(
     name="PATTERN: [Brief description]",
     episode_body="Use case: [when to use]\nImplementation: [how to implement]\nExample: [code snippet]",
-    group_id="proj_<projectname>",
+    group_id="proj:<projectname>",
     source_description="pattern",
     source="text"
 )
@@ -88,7 +88,7 @@ mcp__graphiti__add_memory(
 mcp__graphiti__add_memory(
     name="ARCH: [Brief description]",
     episode_body="Decision: [what was decided]\nRationale: [why]\nAlternatives considered: [what else]\nTradeoffs: [pros/cons]",
-    group_id="proj_<projectname>",
+    group_id="proj:<projectname>",
     source_description="architecture",
     source="text"
 )
@@ -114,7 +114,7 @@ mcp__graphiti__add_memory(
 ```python
 mcp__graphiti__get_context(
     query="[relevant keywords]",
-    group_ids=["proj_<projectname>"]
+    group_ids=["proj:<projectname>"]
 )
 ```
 
@@ -122,7 +122,7 @@ mcp__graphiti__get_context(
 ```python
 mcp__graphiti__search_nodes(
     query="[search term]",
-    group_ids=["proj_<projectname>"],
+    group_ids=["proj:<projectname>"],
     max_nodes=10
 )
 ```
@@ -131,7 +131,7 @@ mcp__graphiti__search_nodes(
 ```python
 mcp__graphiti__search_memory_facts(
     query="[search term]",
-    group_ids=["proj_<projectname>"],
+    group_ids=["proj:<projectname>"],
     max_facts=10
 )
 ```
@@ -139,7 +139,7 @@ mcp__graphiti__search_memory_facts(
 ### List Recent Episodes
 ```python
 mcp__graphiti__get_episodes(
-    group_ids=["proj_<projectname>"],
+    group_ids=["proj:<projectname>"],
     max_episodes=10
 )
 ```
