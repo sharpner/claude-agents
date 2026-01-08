@@ -126,16 +126,26 @@ $DIFF
 [1-2 sentence summary]
 
 ---
+## Required Subagent Reviews
+
+Based on the changed files, recommend which Claude Code subagents MUST be run before merge:
+
+- If UI Components changed (tsx, css): **mobile-responsive-reviewer** (44px touch targets!)
+- If API/Routes changed: **security-pentest-reviewer** (OWASP Top 10)
+- If Auth/Session changed: **security-pentest-reviewer** (Auth flows!)
+
+Format:
+\`\`\`
+Task(subagent_type="pr-review-toolkit:code-reviewer", prompt="Review PR #$PR_NUMBER")
+Task(subagent_type="...", prompt="...")  # if applicable
+\`\`\`
+
+---
 ## Required Before Merge
 
-### 1. E2E Testing
-Test the changed features manually in a production-like environment.
-
-### 2. Automated Tests
-All tests must pass.
-
-### 3. Get Approval & Merge
-After approval: gh pr merge --squash --delete-branch
+1. Run recommended subagent reviews above
+2. All tests must pass
+3. After approval: \`gh pr merge --squash --delete-branch\`
 
 Be concise. Only flag real issues, not style preferences.
 EOF

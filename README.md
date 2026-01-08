@@ -11,8 +11,8 @@ Production-ready Claude Code workflows with Graphiti memory, quality gates, and 
 # Install the core workflow plugin
 /plugin install workflow-core@sharpner-claude-agents
 
-# Optional: Setup Gemini integration
-/workflow-core:setup-gemini
+# Initialize your project (creates CLAUDE.md, docs, optional Gemini)
+/workflow-core:init
 ```
 
 ---
@@ -56,10 +56,11 @@ Production-ready Claude Code workflows with Graphiti memory, quality gates, and 
 | `review-agent` | Quality gate validation |
 | `gemini-explorer` | [OPTIONAL] Large-context codebase analysis (1M tokens) |
 
-### Commands (6)
+### Commands (7)
 
 | Command | Purpose |
 |---------|---------|
+| `/workflow-core:init` | **START HERE** - Initialize project with CLAUDE.md, docs, optional Gemini |
 | `/workflow-core:pre-pr` | Pre-PR validation checklist |
 | `/workflow-core:feature-branch` | Create and setup feature branch |
 | `/workflow-core:next-issue` | Pick next GitHub issue, create worktree, start implementation |
