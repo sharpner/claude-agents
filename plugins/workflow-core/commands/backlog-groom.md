@@ -88,14 +88,14 @@ For each related issue found:
 # Search for architectural decisions
 mcp__graphiti__search_nodes(
     query="[keywords from goal]",
-    group_ids=["patterns", "architecture"],
+    group_ids=["proj_<project>"],
     max_nodes=5
 )
 
 # Search for related patterns
 mcp__graphiti__search_memory_facts(
     query="[entity/feature from goal]",
-    group_ids=["patterns", "wip"],
+    group_ids=["proj_<project>"],
     max_facts=5
 )
 ```
@@ -227,7 +227,7 @@ mcp__graphiti__add_memory(
         "rationale": "[why]"
     }),
     source="json",
-    group_id="wip"
+    group_id="proj_<project>"
 )
 ```
 
