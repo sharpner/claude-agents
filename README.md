@@ -17,6 +17,19 @@ Production-ready Claude Code workflows with Graphiti memory, quality gates, and 
 
 ---
 
+## Prerequisites
+
+- **GitHub CLI (`gh`)** — Required for PR workflows and scripts
+  ```bash
+  # Install: https://cli.github.com/
+  brew install gh        # macOS
+
+  # Authenticate
+  gh auth login
+  ```
+
+---
+
 ## What's Included
 
 ### Skills (9)
