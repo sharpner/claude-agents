@@ -18,15 +18,15 @@ set -uo pipefail
 
 PR_NUMBER="${1:-}"
 SUBAGENT="${2:-}"
-GEMINI_MODEL="${3:-gemini-2.5-pro}"
+GEMINI_MODEL="${3:-gemini-3-pro}"
 
 # Validation
 if [[ -z "$PR_NUMBER" ]]; then
   echo "Usage: $0 <pr-number> <subagent-name> [gemini-model]"
   echo ""
   echo "Available models:"
-  echo "  - gemini-2.5-pro (default)"
-  echo "  - gemini-2.5-flash"
+  echo "  - gemini-3-pro (default)"
+  echo "  - gemini-3-flash"
   exit 1
 fi
 

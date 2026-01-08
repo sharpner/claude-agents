@@ -87,7 +87,7 @@ FILE_CONTEXT="
 
 echo "Running Gemini review..."
 
-REVIEW=$(cat <<EOF | gemini --model gemini-2.5-pro
+REVIEW=$(cat <<EOF | gemini --model gemini-3-pro
 You are a senior code reviewer. Review this GitHub PR diff.
 
 **PR Title:** $PR_TITLE
