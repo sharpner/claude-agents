@@ -1,17 +1,28 @@
 # CLAUDE.md — {{PROJECT_NAME}}
 
-> **{{PROJECT_TAGLINE}}**
+> **"{{PROJECT_TAGLINE}}"**
+
+## Development Philosophy
+
+**WE MUST NOT DO SHORTCUTS**
+
+### Non-Negotiable Rules
+- NO MOCKING — Real backend connections only
+- NO TODOs — Fix immediately and completely
+- NO else statements — Guard clauses everywhere
+- NO utils/ folders — Proper package design
+- 100% test pass rate required to commit
+- Never push directly to main
+- **NO MERGE WITHOUT REVIEW** — Always run code-reviewer subagent before merging PRs
 
 ---
 
-## SKILLS STATT DUPLIKATION
-
-**Context wird via Skills geladen — nicht hier dupliziert:**
+## SKILLS (Context via Skills laden)
 
 | Skill | Wann aufrufen |
 |-------|---------------|
 | `core-rules` | **IMMER** — Guard clauses, no TODOs, no mocking |
-| `quality-gate` | **IMMER bei Code-Änderungen** — 7-Punkt-Checklist MUSS in Response |
+| `quality-gate` | **IMMER bei Code-Änderungen** — 8/8 Checklist PFLICHT! |
 | `worktree` | **VOR Code-Änderungen** — Isolation Check |
 | `graphiti-memory` | Session-Start, neue Tasks, bei Fehlern |
 | `delegation` | Komplexe Tasks — Subagent-Auswahl |
@@ -20,11 +31,69 @@
 | `verification` | Vor Completion Claims — Evidence required |
 | `pr-workflow` | PRs — CI, Review, Merge-Rules |
 
-**Skill aufrufen:** "Invoke skill `<name>`" oder automatisch via Trigger
+**Skill aufrufen:** "Invoke skill `<name>`"
 
 ---
 
-## WORKTREE CHECK (vor JEDER Codeänderung)
+## 🎯 QUALITY GATE: [8/8] Status Check
+
+**MUSS als ERSTES in jeder Antwort stehen bei Code-Änderungen:**
+
+### Die 8 Checks (Reihenfolge kritisch!)
+
+1. **[✓/✗] Graphiti ZUERST**: Wurde VOR ALLEM ANDEREN das Arbeitsgedächtnis durchsucht?
+2. **[✓/✗] Delegation**: Wurde geprüft ob Subagents die Aufgabe übernehmen können?
+3. **[✓/✗] Product Review**: Bei Feature-Planung: Team konsultiert?
+4. **[✓/✗] Design System**: Wird der Style eingehalten?
+5. **[✓/✗] Testing**: Wurden Tests ausgeführt / geschrieben?
+6. **[✓/✗] PR Review**: Bei PR-Merge: CI abgewartet + code-reviewer Subagent ausgeführt?
+7. **[✓/✗] Mobile**: Bei UI-Änderungen: mobile-responsive-reviewer ausgeführt? (44px touch targets!)
+8. **[✓/✗] Security**: Bei API/Auth-Änderungen: security-pentest-reviewer ausgeführt? (OWASP Top 10)
+
+### PFLICHT-FORMAT:
+```
+**[x/8] Status Check:**
+- ✅ Graphiti: VOR der Arbeit nach [keywords] gesucht, [n] relevante Einträge gefunden
+- ✅ Delegation: Task an [agent] delegiert / Begründet selbst gemacht
+- ✅ Product Review: Team konsultiert / Keine Feature-Planung
+- ✅ Design System: Style compliant / Keine UI-Änderungen
+- ✅ Testing: `npm test` erfolgreich / Keine Code-Änderungen
+- ✅ PR Review: CI grün + code-reviewer passed / Kein PR in dieser Antwort
+- ✅ Mobile: mobile-responsive-reviewer passed / Keine UI-Änderungen
+- ✅ Security: security-pentest-reviewer passed / Keine API/Auth-Änderungen
+```
+
+**REGEL**: Graphiti-Check MUSS immer ✅ sein, außer bei trivialen Fragen ("Hallo")
+
+---
+
+## 🚨 PR MERGE WORKFLOW (PFLICHT!)
+
+**VOR JEDEM PR MERGE — KEINE AUSNAHMEN:**
+
+### Schritt 1: CI Pipeline abwarten
+```bash
+gh pr checks <pr-number> --watch
+```
+
+### Schritt 2: Code Review mit Subagent
+```
+Task(subagent_type="pr-review-toolkit:code-reviewer", prompt="Review PR #X")
+```
+
+### Schritt 3: Erst dann Merge
+```bash
+gh pr merge --squash --delete-branch
+```
+
+### ❌ VERBOTEN:
+- Merge ohne auf CI zu warten
+- Merge ohne code-reviewer Subagent
+- Schnelles "gh pr create && gh pr merge" in einem Schritt
+
+---
+
+## 🔧 WORKTREE CHECK (vor JEDER Codeänderung)
 
 ```bash
 pwd                      # MUSS: {{project}}-<name>
@@ -36,24 +105,48 @@ git branch --show-current # MUSS: feat/xxx, fix/xxx, chore/xxx
 cd {{PROJECT_ROOT}}
 git worktree add ../{{project}}-<name> -b <type>/<issue>-<desc>
 cd ../{{project}}-<name>
-npm install  # oder: go mod download / pip install -e .
 ```
 
 ---
 
-## QUALITY GATE (PFLICHT bei Code-Änderungen)
+## 🧠 GRAPHITI: Arbeitsgedächtnis IMMER ZUERST!
 
-**MUSS als ERSTES in jeder Response mit Code-Änderungen stehen:**
+**BEI JEDER AUFGABE — ABSOLUT KEINE AUSNAHMEN:**
 
+### SESSION-START:
+```python
+mcp__graphiti__get_context(
+    query="gotcha fix pattern architecture",
+    group_ids=["proj_{{project}}", "global_"]
+)
 ```
-**Quality Gate [X/7]:**
-- [ ] Worktree: Isolierter Branch, nicht main
-- [ ] Graphiti: Memory nach Kontext durchsucht
-- [ ] Delegation: Subagent-Nutzung evaluiert
-- [ ] Tests: Alle Tests grün
-- [ ] Verification: Frische Commands, Evidence attached
-- [ ] TDD: Tests vor Implementation (bei neuem Code)
-- [ ] No Shortcuts: Keine TODOs, keine Mocks, keine Placeholder
+
+### VOR JEDER AUFGABE:
+```python
+mcp__graphiti__search_nodes(
+    query="[task keywords]",
+    group_ids=["proj_{{project}}"],
+    max_nodes=10
+)
+```
+
+### BEI FEHLERN:
+```python
+mcp__graphiti__search_nodes(
+    query="[error message]",
+    group_ids=["proj_{{project}}"],
+    max_nodes=5
+)
+```
+
+### HEUREKA-REGEL: Erkenntnisse SOFORT speichern!
+```python
+mcp__graphiti__add_memory(
+    name="HEUREKA: [kurze Beschreibung]",
+    episode_body="Was gelernt, was war falsch, wie ist es richtig",
+    group_id="proj_{{project}}",
+    source="text"
+)
 ```
 
 ---
@@ -88,14 +181,6 @@ PR URL: {{REPO_URL}}/pull/<number>
 Worktree: {{project}}-<name>
 Branch: <type>/<issue>-<description>
 ```
-
----
-
-## Reference Docs
-
-| Document | Content |
-|----------|---------|
-| {{DOC_LINKS}} |
 
 ---
 
