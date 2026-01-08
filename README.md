@@ -63,7 +63,7 @@ Production-ready Claude Code workflows with Graphiti memory, quality gates, and 
 | `/workflow-core:init` | **START HERE** - Initialize project with CLAUDE.md, docs, optional Gemini |
 | `/workflow-core:pre-pr` | Pre-PR validation checklist |
 | `/workflow-core:feature-branch` | Create and setup feature branch |
-| `/workflow-core:next-issue` | Pick next GitHub issue, create worktree, start implementation |
+| `/workflow-core:next-issue` | **FULL WORKFLOW** - Issue → Worktree → Implement → PR → Gemini Review → Merge |
 | `/workflow-core:backlog-groom` | Goal-driven backlog refinement |
 | `/workflow-core:gemini-review` | [OPTIONAL] Gemini AI code review |
 | `/workflow-core:setup-gemini` | Setup Gemini API key and scripts |
@@ -136,22 +136,44 @@ function process(data?: Data) {
 
 ## Workflow
 
+`/next-issue` handles the **complete workflow** from start to finish:
+
 ```
-/next-issue (picks from GitHub, creates worktree)
-        ↓
-Planning Agent (reads VISION/LEARNINGS/GUIDANCE)
-        ↓
-Feature Specification (docs/specs/feature-*.md)
-        ↓
-Implementation Agent (TDD, guard clauses, no shortcuts)
-        ↓
-Testing Agent (>80% coverage)
-        ↓
-Review Agent (8/8 quality gate)
-        ↓
-/pre-pr (validation checklist)
-        ↓
-PR Workflow (CI → code-reviewer → Merge)
+┌─────────────────────────────────────────────────────────┐
+│  PHASE 1-3: SETUP                                       │
+├─────────────────────────────────────────────────────────┤
+│  1. Graphiti Check (load context)                       │
+│  2. Issue Selection (next → P0 → P1 → P2 → bug)        │
+│  3. Graphiti Context (relevant patterns/gotchas)        │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
+│  PHASE 4-5: WORKTREE & EXPLORATION                      │
+├─────────────────────────────────────────────────────────┤
+│  4. Create Worktree (git worktree add)                  │
+│  4.5 Update Labels ("in progress")                      │
+│  5. Explore Agent (find relevant code)                  │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
+│  PHASE 6-7: IMPLEMENTATION                              │
+├─────────────────────────────────────────────────────────┤
+│  6. Plan Agent (implementation strategy)                │
+│  7. Implementation (TDD, guard clauses, no shortcuts)   │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
+│  PHASE 8: PR WORKFLOW (after implementation)            │
+├─────────────────────────────────────────────────────────┤
+│  8.1 Run Tests                                          │
+│  8.2 Create PR                                          │
+│  8.3 Gemini Review (./scripts/gemini-review.sh)         │
+│  8.4 Code Reviewer Subagent                             │
+│  8.5 Additional Reviewers (mobile/security if needed)   │
+│  8.6 Wait for CI + Merge                                │
+│  8.7 Cleanup Worktree                                   │
+│  8.8 Save Learnings to Graphiti                         │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -233,6 +255,7 @@ claude-agents/
 │       │   ├── review-agent.md
 │       │   └── gemini-explorer.md
 │       ├── commands/
+│       │   ├── init.md
 │       │   ├── pre-pr.md
 │       │   ├── feature-branch.md
 │       │   ├── next-issue.md
