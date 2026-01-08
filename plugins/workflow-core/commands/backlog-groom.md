@@ -237,9 +237,13 @@ mcp__graphiti__add_memory(
 
 If `$ARGUMENTS` is empty:
 
-### Load All Open Issues
+### Load All Open Issues (P0 first, then oldest first)
 ```bash
-gh issue list --state open --json number,title,labels --limit 100
+# First: P0 priority issues (oldest first)
+gh issue list --state open --label P0 --json number,title,labels,createdAt --limit 100 | jq 'sort_by(.createdAt)'
+
+# Then: All other issues (oldest first, excluding P0)
+gh issue list --state open --json number,title,labels,createdAt --limit 100 | jq '[.[] | select(.labels | map(.name) | contains(["P0"]) | not)] | sort_by(.createdAt)'
 ```
 
 ### Summarize by Epic/Label
