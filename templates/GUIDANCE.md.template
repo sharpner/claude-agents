@@ -1,0 +1,109 @@
+# GUIDANCE.md - {{PROJECT_NAME}}
+
+**Version**: 1.0
+**Created**: {{DATE}}
+**Next Review**: Bi-weekly
+
+---
+
+## Code Standards
+
+### Guard Clauses (MANDATORY)
+
+```
+// ALWAYS: Guard clauses with early return
+function process(data) {
+  if (!data) return null;
+  if (!data.valid) return null;
+
+  // Happy path at lowest indentation
+  return transform(data);
+}
+
+// NEVER: Else blocks
+function process(data) {
+  if (data) {
+    return transform(data);
+  } else {  // FORBIDDEN
+    return null;
+  }
+}
+```
+
+### No TODOs
+- Fix immediately or delete
+- No placeholder implementations
+- No "coming soon" features
+
+### No Mocking
+- Real backend connections
+- Real databases (use testcontainers)
+- Real external services where possible
+
+### No Utils/Misc
+- Proper package organization
+- Descriptive names
+- Single responsibility
+
+---
+
+## Architecture
+
+### Pattern: {{ARCHITECTURE_PATTERN}}
+
+{{ARCHITECTURE_DESCRIPTION}}
+
+### File Organization
+
+```
+src/
+├── {{FOLDER_1}}/
+├── {{FOLDER_2}}/
+└── {{FOLDER_3}}/
+```
+
+---
+
+## Testing
+
+### Coverage Requirements
+- Overall: > 80%
+- Business Logic: 100%
+- Data Layer: > 90%
+
+### Test Structure
+- Arrange-Act-Assert pattern
+- Descriptive test names
+- Independent tests
+
+---
+
+## Performance
+
+| Metric | Target |
+|--------|--------|
+| {{PERF_METRIC_1}} | {{PERF_TARGET_1}} |
+| {{PERF_METRIC_2}} | {{PERF_TARGET_2}} |
+
+---
+
+## Don'ts (FORBIDDEN)
+
+- Else blocks
+- Force unwrapping (language-specific)
+- TODOs in committed code
+- Mocking in production code
+- Utils/misc folders
+- Global mutable state
+- Singletons (unless approved)
+
+---
+
+## Version History
+
+### v1.0 ({{DATE}})
+- Initial standards established
+
+---
+
+*Last Updated: {{DATE}}*

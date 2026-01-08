@@ -1,0 +1,21 @@
+{
+  "name": "sharpner-claude-agents",
+  "owner": {
+    "name": "sharpner",
+    "email": "nwagensonner@gmail.com"
+  },
+  "metadata": {
+    "description": "Production-ready Claude Code workflows with Graphiti memory, worktree automation, and quality gates",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "workflow-core",
+      "source": "./plugins/workflow-core",
+      "description": "Core development skills: guard clauses, PR workflow, Graphiti memory, quality gates",
+      "version": "1.0.0",
+      "keywords": ["workflow", "quality", "graphiti", "guards"],
+      "category": "productivity"
+    }
+  ]
+}

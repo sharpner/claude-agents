@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Workflow-core plugin loaded. Skills: core-rules, graphiti-memory, pr-workflow'"
+          }
+        ]
+      }
+    ]
+  }
+}

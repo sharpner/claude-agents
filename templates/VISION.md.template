@@ -1,0 +1,68 @@
+# VISION.md - {{PROJECT_NAME}}
+
+**Version**: 1.0
+**Created**: {{DATE}}
+**Next Review**: Quarterly
+
+---
+
+## Mission
+
+{{PROJECT_MISSION}}
+
+---
+
+## Core Principles
+
+### 1. Quality Over Speed
+Production-ready code from day one. No shortcuts.
+
+### 2. Excellence in Craft
+Follow best practices for our tech stack.
+
+### 3. Maintainability
+Clear over clever. Composition over inheritance.
+
+### 4. Performance
+Fast, efficient, battery/resource conscious.
+
+### 5. Developer Experience
+High test coverage, comprehensive docs.
+
+---
+
+## Success Metrics
+
+| Metric | Target |
+|--------|--------|
+| Test Coverage | > 80% |
+| Build Time | < 2 minutes |
+| Crash Rate | Zero |
+| User Rating | > 4.5 stars |
+
+---
+
+## Target Users
+
+### Primary Persona
+- **Name**: {{PERSONA_NAME}}
+- **Role**: {{PERSONA_ROLE}}
+- **Goals**: {{PERSONA_GOALS}}
+- **Pain Points**: {{PERSONA_PAIN}}
+
+---
+
+## Long-term Direction
+
+### Phase 1: Foundation
+{{PHASE_1}}
+
+### Phase 2: Growth
+{{PHASE_2}}
+
+### Phase 3: Scale
+{{PHASE_3}}
+
+---
+
+*Last Updated: {{DATE}}*

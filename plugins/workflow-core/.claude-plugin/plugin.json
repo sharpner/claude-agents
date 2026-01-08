@@ -1,0 +1,15 @@
+{
+  "name": "workflow-core",
+  "version": "1.0.0",
+  "description": "Core development workflow: guard clauses, PR workflow, Graphiti memory, quality gates, and agent templates",
+  "author": {
+    "name": "sharpner"
+  },
+  "repository": "https://github.com/sharpner/claude-agents",
+  "license": "MIT",
+  "keywords": ["workflow", "quality", "graphiti", "guards", "pr", "testing"],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "commands": "./commands/",
+  "hooks": "./hooks/hooks.json"
+}

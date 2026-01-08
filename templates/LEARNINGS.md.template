@@ -1,0 +1,68 @@
+# LEARNINGS.md - {{PROJECT_NAME}}
+
+**Purpose**: Organizational memory of what we've learned
+**Update Frequency**: Weekly (every Friday)
+
+---
+
+## Format
+
+Each entry should include:
+- **Date**: When it happened
+- **What we tried**: The approach taken
+- **What we learned**: The outcome/insight
+- **Decision**: What we decided based on this
+- **Impact**: How it affects future work
+- **Source**: PR, issue, or discussion reference
+
+---
+
+## Learnings
+
+### {{DATE}} - Initial Setup
+
+**What we tried**: Setting up project with workflow-core plugin
+
+**What we learned**: Structured workflows improve consistency
+
+**Decision**: Use planning -> implementation -> testing -> review flow
+
+**Impact**: All features follow same quality process
+
+**Source**: Initial project setup
+
+---
+
+### Template for New Entry
+
+```markdown
+### YYYY-MM-DD - Brief Title
+
+**What we tried**: {approach taken}
+
+**What we learned**: {outcome/insight}
+
+**Decision**: {what we decided}
+
+**Impact**: {how it affects future work}
+
+**Source**: #{issue/PR number} or description
+```
+
+---
+
+## Weekly Learning Session
+
+**Schedule**: Every Friday
+**Duration**: 30-60 minutes
+
+**Agenda**:
+1. Review Graphiti for patterns
+2. Identify top problems encountered
+3. Extract learnings
+4. Update this document
+5. Consider GUIDANCE updates
+
+---
+
+*Last Updated: {{DATE}}*

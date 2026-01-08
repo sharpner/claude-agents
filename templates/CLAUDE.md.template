@@ -1,0 +1,65 @@
+# CLAUDE.md - {{PROJECT_NAME}}
+
+> **{{PROJECT_TAGLINE}}**
+
+---
+
+## SKILLS
+
+Context loaded via skills - not duplicated here:
+
+| Skill | When to Use |
+|-------|-------------|
+| `core-rules` | ALWAYS - Guard clauses, no TODOs, no mocking |
+| `graphiti-memory` | Session-start, new tasks, errors |
+| `pr-workflow` | PRs - CI, review, merge rules |
+
+**Invoke skill:** "Invoke skill `<name>`" or automatically via trigger
+
+---
+
+## PROJECT SETUP
+
+### Prerequisites
+```bash
+# List your prerequisites
+{{PREREQUISITES}}
+```
+
+### Development
+```bash
+{{DEV_COMMANDS}}
+```
+
+---
+
+## QUICK COMMANDS
+
+```bash
+{{QUICK_COMMANDS}}
+```
+
+---
+
+## COMPLETION SUMMARY (Required for PR)
+
+```
+Summary: <Brief description>
+Tests: <Pass/Fail>
+PR URL: https://github.com/{{ORG}}/{{PROJECT_NAME}}/pull/<number>
+Branch: <type>/<issue>-<description>
+```
+
+---
+
+## Reference Docs
+
+| Document | Content |
+|----------|---------|
+| [docs/VISION.md](./docs/VISION.md) | Strategic direction |
+| [docs/LEARNINGS.md](./docs/LEARNINGS.md) | Historical decisions |
+| [docs/GUIDANCE.md](./docs/GUIDANCE.md) | Current standards |
+
+---
+
+*"{{PROJECT_MOTTO}}"*
