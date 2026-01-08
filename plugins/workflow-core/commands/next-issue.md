@@ -220,12 +220,95 @@ After completing all phases, report:
 - Currently implementing: [first task]
 ```
 
+## PHASE 8: AFTER IMPLEMENTATION COMPLETE
+
+**When all tasks are done, run the full PR workflow:**
+
+### 8.1 Run Tests
+```bash
+make test || npm test || go test ./...
+```
+
+### 8.2 Create PR
+```bash
+gh pr create --title "<type>: <description>" --body "Closes #<issue-number>
+
+## Summary
+- [Changes made]
+
+## Test Plan
+- [How to test]"
+```
+
+### 8.3 Run Gemini Review (if available)
+```bash
+# Get PR number
+PR_NUMBER=$(gh pr list --head "$(git branch --show-current)" --json number --jq '.[0].number')
+
+# Run Gemini review script
+./scripts/gemini-review.sh $PR_NUMBER
+```
+
+Or manually with Gemini CLI:
+```bash
+gh pr diff $PR_NUMBER | gemini --model gemini-3-pro "Review this PR for security, error handling, type safety. Recommend subagents (mobile-reviewer, security-reviewer) based on changed files."
+```
+
+### 8.4 Run Code Reviewer Subagent
+```
+Task(
+    subagent_type="pr-review-toolkit:code-reviewer",
+    prompt="Review PR #<pr-number>. Check for:
+    - Security vulnerabilities
+    - Error handling
+    - Guard clauses (no else!)
+    - Test coverage
+    Post findings."
+)
+```
+
+### 8.5 Additional Reviewers (based on file types)
+```
+# If UI files changed:
+Task(subagent_type="pr-review-toolkit:code-reviewer", prompt="Review PR #X for mobile responsiveness, 44px touch targets")
+
+# If API/Auth files changed:
+Task(subagent_type="pr-review-toolkit:code-reviewer", prompt="Review PR #X for OWASP Top 10, auth security")
+```
+
+### 8.6 Wait for CI + Merge
+```bash
+# Wait for CI
+gh pr checks $PR_NUMBER --watch
+
+# Merge after approval
+gh pr merge $PR_NUMBER --squash --delete-branch
+```
+
+### 8.7 Cleanup Worktree
+```bash
+cd ../<main-repo>
+git worktree remove ../<repo>-<issue>
+```
+
+### 8.8 Save Learnings to Graphiti
+```python
+mcp__graphiti__add_memory(
+    name="COMPLETED: Issue #<number> - <title>",
+    episode_body="What was implemented, gotchas found, patterns used",
+    group_id="proj:<project>",
+    source="text"
+)
+```
+
+---
+
 ## REMINDERS
 
 - **NEVER** push to main
-- **ALWAYS** run tests before commit (`make test` or `npm test`)
-- **ALWAYS** pre-pr before PR creation (`/pre-pr`)
-- **ALWAYS** code-reviewer before merge
-- **ALWAYS** wait for GitHub Approve before merge
-- **ALWAYS** save insights to Graphiti (EUREKA rule!)
+- **ALWAYS** run tests before commit
+- **ALWAYS** gemini-review.sh after PR creation
+- **ALWAYS** code-reviewer subagent before merge
+- **ALWAYS** wait for CI green before merge
+- **ALWAYS** save insights to Graphiti (HEUREKA rule!)
 - If blocked: `gh issue edit $ISSUE --add-label "blocked"` + comment
