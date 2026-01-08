@@ -119,7 +119,7 @@ $(cat CLAUDE.md)
 echo "🤖 Running Gemini as $SUBAGENT..."
 echo ""
 
-REVIEW=$(gemini --model "$GEMINI_MODEL" -p "
+REVIEW=$(cat <<EOF | gemini --model "$GEMINI_MODEL"
 You are impersonating a Claude Code subagent for code review.
 
 **CRITICAL: Follow the exact identity, methodology, and output format from the agent prompt.**
@@ -159,7 +159,8 @@ $FULL_FILES_CONTENT
 5. Include verdict and file:line references
 
 **Start your review as the subagent:**
-" 2>&1)
+EOF
+2>&1)
 
 if [[ $? -ne 0 ]]; then
   echo "Error: Gemini execution failed"

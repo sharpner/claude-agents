@@ -87,7 +87,7 @@ FILE_CONTEXT="
 
 echo "Running Gemini review..."
 
-REVIEW=$(gemini -p "
+REVIEW=$(cat <<EOF | gemini
 You are a senior code reviewer. Review this GitHub PR diff.
 
 **PR Title:** $PR_TITLE
@@ -138,7 +138,8 @@ All tests must pass.
 After approval: gh pr merge --squash --delete-branch
 
 Be concise. Only flag real issues, not style preferences.
-")
+EOF
+)
 
 echo ""
 echo "Posting review as PR comment..."
