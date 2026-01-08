@@ -19,7 +19,7 @@ gh pr diff $PR_NUMBER
 
 3. Run Gemini review using Gemini CLI:
 ```bash
-gh pr diff $PR_NUMBER | gemini -p "Review this PR diff for: security vulnerabilities, error handling, type safety, architecture issues. Be specific with file:line references."
+gh pr diff $PR_NUMBER | gemini "Review this PR diff for: security vulnerabilities, error handling, type safety, architecture issues. Be specific with file:line references."
 ```
 
 4. Post result as PR comment:

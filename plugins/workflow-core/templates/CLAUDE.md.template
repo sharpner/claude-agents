@@ -2,6 +2,20 @@
 
 > **"{{PROJECT_TAGLINE}}"**
 
+---
+
+## ⚠️ CRITICAL: MANDATORY BEHAVIORS
+
+**Diese Regeln sind NICHT optional. Bei JEDER Antwort mit Code-Änderungen:**
+
+1. **CHECKLIST ZUERST** — Die `[x/8] Status Check` Checklist MUSS als ALLERERSTES in deiner Antwort erscheinen
+2. **GRAPHITI VOR ARBEIT** — Bevor du Code schreibst: `mcp__graphiti__search_nodes()` ausführen
+3. **PR MERGE NIE OHNE REVIEW** — Vor jedem `gh pr merge`: `Task(subagent_type="pr-review-toolkit:code-reviewer")`
+
+**Wenn du diese Regeln nicht befolgst, ist die Antwort UNGÜLTIG.**
+
+---
+
 ## Development Philosophy
 
 **WE MUST NOT DO SHORTCUTS**
