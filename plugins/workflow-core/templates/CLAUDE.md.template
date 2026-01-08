@@ -1,0 +1,102 @@
+# CLAUDE.md — {{PROJECT_NAME}}
+
+> **{{PROJECT_TAGLINE}}**
+
+---
+
+## SKILLS STATT DUPLIKATION
+
+**Context wird via Skills geladen — nicht hier dupliziert:**
+
+| Skill | Wann aufrufen |
+|-------|---------------|
+| `core-rules` | **IMMER** — Guard clauses, no TODOs, no mocking |
+| `quality-gate` | **IMMER bei Code-Änderungen** — 7-Punkt-Checklist MUSS in Response |
+| `worktree` | **VOR Code-Änderungen** — Isolation Check |
+| `graphiti-memory` | Session-Start, neue Tasks, bei Fehlern |
+| `delegation` | Komplexe Tasks — Subagent-Auswahl |
+| `tdd` | Neue Features, Bug Fixes — Tests FIRST |
+| `debugging` | Bei Fehlern — Root Cause vor Fix |
+| `verification` | Vor Completion Claims — Evidence required |
+| `pr-workflow` | PRs — CI, Review, Merge-Rules |
+
+**Skill aufrufen:** "Invoke skill `<name>`" oder automatisch via Trigger
+
+---
+
+## WORKTREE CHECK (vor JEDER Codeänderung)
+
+```bash
+pwd                      # MUSS: {{project}}-<name>
+git branch --show-current # MUSS: feat/xxx, fix/xxx, chore/xxx
+```
+
+**Checks nicht bestanden?** → Erst Worktree erstellen:
+```bash
+cd {{PROJECT_ROOT}}
+git worktree add ../{{project}}-<name> -b <type>/<issue>-<desc>
+cd ../{{project}}-<name>
+npm install  # oder: go mod download / pip install -e .
+```
+
+---
+
+## QUALITY GATE (PFLICHT bei Code-Änderungen)
+
+**MUSS als ERSTES in jeder Response mit Code-Änderungen stehen:**
+
+```
+**Quality Gate [X/7]:**
+- [ ] Worktree: Isolierter Branch, nicht main
+- [ ] Graphiti: Memory nach Kontext durchsucht
+- [ ] Delegation: Subagent-Nutzung evaluiert
+- [ ] Tests: Alle Tests grün
+- [ ] Verification: Frische Commands, Evidence attached
+- [ ] TDD: Tests vor Implementation (bei neuem Code)
+- [ ] No Shortcuts: Keine TODOs, keine Mocks, keine Placeholder
+```
+
+---
+
+## QUICK COMMANDS
+
+```bash
+{{DEV_COMMAND}}      # Start dev server
+{{TEST_COMMAND}}     # Run tests
+{{BUILD_COMMAND}}    # Build project
+```
+
+---
+
+## NIEMALS ÄNDERN ohne Rückfrage
+
+Claude's Wissen endet {{KNOWLEDGE_CUTOFF}}. Folgende Dinge NIEMALS eigenmächtig ändern:
+
+- **API Model IDs** (OpenAI, Anthropic, etc.)
+- **API Konfigurationen** die nach dem Cutoff released wurden
+
+**Bei Unsicherheit: USER FRAGEN, nicht raten!**
+
+---
+
+## COMPLETION SUMMARY (Pflicht bei Worktree-Abschluss)
+
+```
+Summary: <Kurzbeschreibung>
+Tests: <Pass/Fail>
+PR URL: {{REPO_URL}}/pull/<number>
+Worktree: {{project}}-<name>
+Branch: <type>/<issue>-<description>
+```
+
+---
+
+## Reference Docs
+
+| Document | Content |
+|----------|---------|
+| {{DOC_LINKS}} |
+
+---
+
+*"{{PROJECT_MOTTO}}"*

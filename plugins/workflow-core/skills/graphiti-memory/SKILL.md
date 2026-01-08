@@ -9,6 +9,18 @@ description: Use when starting a session, beginning a new task, or encountering 
 
 ---
 
+## ⚠️ REMINDER: Other Critical Skills
+
+When this skill is invoked, also remember:
+
+| Skill | When |
+|-------|------|
+| `quality-gate` | **EVERY response with code changes** — 7/7 Checklist! |
+| `worktree` | **BEFORE any code changes** — Isolation check |
+| `verification` | **BEFORE claiming completion** — Evidence required |
+
+---
+
 ## GROUP ID CONVENTION
 
 Use consistent group IDs per project:
