@@ -39,7 +39,7 @@ echo ""
 mkdir -p "$OUTPUT_DIR"
 
 # Run Gemini with research prompt
-cat <<EOF | gemini | tee "$OUTPUT_FILE"
+cat <<EOF | gemini --model gemini-2.5-pro | tee "$OUTPUT_FILE"
 You are a senior software engineer researching a topic for a software project.
 
 ## Research Topic
