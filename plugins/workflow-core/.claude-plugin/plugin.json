@@ -7,9 +7,5 @@
   },
   "repository": "https://github.com/sharpner/claude-agents",
   "license": "MIT",
-  "keywords": ["workflow", "quality", "graphiti", "guards", "pr", "testing"],
-  "skills": "./skills/",
-  "agents": "./agents/",
-  "commands": "./commands/",
-  "hooks": "./hooks/hooks.json"
+  "keywords": ["workflow", "quality", "graphiti", "guards", "pr", "testing"]
 }
